@@ -9,6 +9,6 @@ export class AvatarModel {
 }
 
 class AvatarFightModel {
-  monster: MonsterModel;
+  monsterId: string;
   pv: number;
 }

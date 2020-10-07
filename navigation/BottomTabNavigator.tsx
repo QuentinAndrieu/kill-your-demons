@@ -31,7 +31,9 @@ export class BottomTabNavigator extends React.Component<{}, { firestore: any; av
   }
 
   private loadAvatarFromCloud() {
+    console.log('loadAvatarFromCloud');
     if (this.state.firestore) {
+      console.log('avatarCloud');
       const avatarCloud = this.state.firestore.collection('avatars').doc('Bcng4MyPHBbUUW5ZQFaf');
       avatarCloud
         .get()
@@ -41,6 +43,7 @@ export class BottomTabNavigator extends React.Component<{}, { firestore: any; av
           } else {
             console.log('No avatar !!');
           }
+          console.log('doc', doc.data());
         })
         .catch((error: any) => {
           console.log('Error getting avatar:', error);
@@ -68,7 +71,7 @@ export class BottomTabNavigator extends React.Component<{}, { firestore: any; av
     const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
     return (
-      <BottomTab.Navigator initialRouteName='Avatar' tabBarOptions={{ activeTintColor: Colors['dark'].tint }}>
+      <BottomTab.Navigator initialRouteName='Avatar' tabBarOptions={{ activeTintColor: Colors['light'].tint }}>
         <BottomTab.Screen
           name='Avatar'
           options={{
@@ -164,7 +167,10 @@ class FightsNavigator extends React.Component<{ avatar: AvatarModel; monsters: M
 
     return (
       <FightsStack.Navigator initialRouteName='FightsScreen'>
-        <FightsStack.Screen name='FightsScreen' component={FightsScreen} options={{ headerTitle: 'Fights' }} />
+        <FightsStack.Screen name='FightsScreen' options={{ headerTitle: 'Fights' }}>
+          {(props) => <FightsScreen {...props} avatar={this.props.avatar} monsters={this.props.monsters} />}
+        </FightsStack.Screen>
+
         <FightsStack.Screen name='FightsAddScreen' options={{ headerTitle: 'Fights Add' }}>
           {(props) => <FightsAddScreen {...props} monsters={this.props.monsters} avatar={this.props.avatar} />}
         </FightsStack.Screen>
