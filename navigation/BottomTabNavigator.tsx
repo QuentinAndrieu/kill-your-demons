@@ -13,6 +13,7 @@ import * as firebase from 'firebase';
 import { AvatarModel } from '../models/AvatarModel';
 import { FightsAddScreen } from '../screens/FightsAddScreen';
 import { MonsterModel } from '../models/MonsterModel';
+import { Icon } from 'react-native-elements';
 
 export class BottomTabNavigator extends React.Component<{}, { firestore: any; avatar: AvatarModel; monsters: MonsterModel[] }> {
   constructor(props: {}) {
@@ -71,20 +72,20 @@ export class BottomTabNavigator extends React.Component<{}, { firestore: any; av
     const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
     return (
-      <BottomTab.Navigator initialRouteName='Avatar' tabBarOptions={{ activeTintColor: Colors['light'].tint }}>
+      <BottomTab.Navigator initialRouteName='Avatar' tabBarOptions={{ activeTintColor: Colors['light'].tint, showLabel: false }}>
         <BottomTab.Screen
           name='Avatar'
           options={{
-            tabBarIcon: ({ color }) => <TabBarIcon name='ios-code' color={color} />,
+            tabBarIcon: ({ color }) => <Icon name='home' type='font-awesome-5' color='white' />,
           }}
         >
-          {(props) => <AvatarNavigator {...props} avatar={this.state.avatar} />}
+          {(props) => <AvatarNavigator {...props} avatar={this.state.avatar} monsters={this.state.monsters} />}
         </BottomTab.Screen>
 
         <BottomTab.Screen
           name='Fights'
           options={{
-            tabBarIcon: ({ color }) => <TabBarIcon name='ios-code' color={color} />,
+            tabBarIcon: ({ color }) => <Icon name='fist-raised' type='font-awesome-5' color='white' />,
           }}
         >
           {(props) => <FightsNavigator {...props} avatar={this.state.avatar} monsters={this.state.monsters} />}
@@ -93,7 +94,7 @@ export class BottomTabNavigator extends React.Component<{}, { firestore: any; av
         <BottomTab.Screen
           name='Monsters'
           options={{
-            tabBarIcon: ({ color }) => <TabBarIcon name='ios-code' color={color} />,
+            tabBarIcon: ({ color }) => <Icon name='pastafarianism' type='font-awesome-5' color='white' />,
           }}
         >
           {(props) => <MonstersNavigator {...props} monsters={this.state.monsters} />}
@@ -103,7 +104,7 @@ export class BottomTabNavigator extends React.Component<{}, { firestore: any; av
           name='Overview'
           component={OverviewNavigator}
           options={{
-            tabBarIcon: ({ color }) => <TabBarIcon name='ios-code' color={color} />,
+            tabBarIcon: ({ color }) => <Icon name='calendar-alt' type='font-awesome-5' color='white' />,
           }}
         />
       </BottomTab.Navigator>
@@ -111,18 +112,8 @@ export class BottomTabNavigator extends React.Component<{}, { firestore: any; av
   }
 }
 
-class TabBarIcon extends React.Component<{ name: string; color: string }> {
-  constructor(props: { name: string; color: string }) {
-    super(props);
-  }
-
-  render() {
-    return <Ionicons size={30} style={{ marginBottom: -3 }} {...this.props} />;
-  }
-}
-
-class AvatarNavigator extends React.Component<{ avatar: AvatarModel }, {}> {
-  constructor(props: { avatar: AvatarModel }) {
+class AvatarNavigator extends React.Component<{ avatar: AvatarModel; monsters: MonsterModel[] }, {}> {
+  constructor(props: { avatar: AvatarModel; monsters: MonsterModel[] }) {
     super(props);
   }
 
@@ -132,7 +123,7 @@ class AvatarNavigator extends React.Component<{ avatar: AvatarModel }, {}> {
     return (
       <AvatarStack.Navigator>
         <AvatarStack.Screen name='AvatarScreen' options={{ headerTitle: 'Avatar Title' }}>
-          {(props) => <AvatarScreen {...props} avatar={this.props.avatar} />}
+          {(props) => <AvatarScreen {...props} avatar={this.props.avatar} monsters={this.props.monsters} />}
         </AvatarStack.Screen>
       </AvatarStack.Navigator>
     );

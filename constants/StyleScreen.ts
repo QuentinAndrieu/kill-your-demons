@@ -5,7 +5,7 @@ export default {
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    color: 'white',
+    color: 'white'
   },
   title: {
     fontSize: 20,

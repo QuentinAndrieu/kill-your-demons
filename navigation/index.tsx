@@ -1,7 +1,8 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
+import { ColorSchemeName, Text, View } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 import { RootStackParamList } from '../types';
 import { BottomTabNavigator } from './BottomTabNavigator';
@@ -21,10 +22,19 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
+function LogoTitle() {
+  return (
+    <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
+      <Icon style={{ marginRight: 5 }} name='skull' type='font-awesome-5' color='white' />
+      <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>KillYourDemons</Text>
+    </View>
+  );
+}
+
 function RootNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name='Root' component={BottomTabNavigator} />
+    <Stack.Navigator>
+      <Stack.Screen name='KillYourDemons' options={{ headerTitle: (props) => <LogoTitle /> }} component={BottomTabNavigator} />
     </Stack.Navigator>
   );
 }

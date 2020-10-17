@@ -8,7 +8,13 @@ export class AvatarModel {
   fights: AvatarFightModel[];
 }
 
-class AvatarFightModel {
+export class AvatarFightModel {
   monsterId: string;
+  daysFighting: DayFighting[];
   pv: number;
+}
+
+export class DayFighting {
+  date: Date;
+  active: boolean;
 }

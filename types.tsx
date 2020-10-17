@@ -1,5 +1,5 @@
 export type RootStackParamList = {
-  Root: undefined;
+  KillYourDemons: undefined;
   NotFound: undefined;
 };
 
