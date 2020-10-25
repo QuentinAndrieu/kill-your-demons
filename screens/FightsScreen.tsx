@@ -6,23 +6,23 @@ import { AvatarModel } from '../models/AvatarModel';
 import StyleScreen from '../constants/StyleScreen';
 import { ListItem, Avatar, Button, Text } from 'react-native-elements';
 import { MonsterModel } from '../models/MonsterModel';
+import { MonstersContext } from '../contexts/MonstersContext';
+import { avatar, AvatarContext } from '../contexts/AvatarContext';
 
 const styleScreen: any = StyleScreen;
 const styles = StyleSheet.create(styleScreen);
 
-export class FightsScreen extends React.Component<{ avatar: AvatarModel; monsters: MonsterModel[]; navigation: any }, {}> {
-  constructor(props: { avatar: AvatarModel; monsters: MonsterModel[]; navigation: any }) {
+export class FightsScreen extends React.Component<{ navigation: any }, {}> {
+  constructor(props: { navigation: any }) {
     super(props);
-    console.log('props', props);
   }
 
   goToFightsAddScreen() {
     this.props.navigation.navigate('FightsAddScreen');
   }
 
-  getMonster(monsterId: string): MonsterModel | undefined {
-    console.log('monster', this.props.monsters);
-    return this.props.monsters?.find((monster) => monster.id === monsterId);
+  getMonster(monsterId: string, monsters: MonsterModel[]): MonsterModel | undefined {
+    return monsters?.find((monster) => monster.id === monsterId);
   }
 
   render() {
@@ -35,25 +35,33 @@ export class FightsScreen extends React.Component<{ avatar: AvatarModel; monster
     ];
 
     return (
-      <View style={styles.container}>
-        <View style={{ width: '100%', height: '70%', margin: '1%' }}>
-          <View>
-            <Text>caca{this.props.avatar?.name}</Text>
-            {this.props.avatar?.fights?.map((fight, i) => (
-              <ListItem key={i} bottomDivider>
-                <Avatar source={{ uri: list[0].avatar_url }} />
-                <ListItem.Content>
-                  <ListItem.Title>{this.getMonster(fight.monsterId)?.name}</ListItem.Title>
-                  <ListItem.Subtitle>{this.getMonster(fight.monsterId)?.description}</ListItem.Subtitle>
-                </ListItem.Content>
-              </ListItem>
-            ))}
-          </View>
-          <Button onPress={() => this.goToFightsAddScreen()} title='Add fight'>
-            Start a fight
-          </Button>
-        </View>
-      </View>
+      <AvatarContext.Consumer>
+        {(avatarContext) => (
+          <MonstersContext.Consumer>
+            {(monstersContext) => (
+              <View style={styles.container}>
+                <View style={{ width: '100%', height: '70%', margin: '1%' }}>
+                  <View>
+                    <Text>caca{avatarContext.avatar.name}</Text>
+                    {avatarContext.avatar?.fights?.map((fight, i) => (
+                      <ListItem key={i} bottomDivider>
+                        <Avatar source={{ uri: list[0].avatar_url }} />
+                        <ListItem.Content>
+                          <ListItem.Title>{this.getMonster(fight.monsterId, monstersContext.monsters)?.name}</ListItem.Title>
+                          <ListItem.Subtitle>{this.getMonster(fight.monsterId, monstersContext.monsters)?.description}</ListItem.Subtitle>
+                        </ListItem.Content>
+                      </ListItem>
+                    ))}
+                  </View>
+                  <Button onPress={() => this.goToFightsAddScreen()} title='Add fight'>
+                    Start a fight
+                  </Button>
+                </View>
+              </View>
+            )}
+          </MonstersContext.Consumer>
+        )}
+      </AvatarContext.Consumer>
     );
   }
 }

@@ -10,11 +10,11 @@ export class AvatarModel {
 
 export class AvatarFightModel {
   monsterId: string;
-  daysFighting: DayFighting[];
+  daysFightings: DayFighting[];
   pv: number;
 }
 
 export class DayFighting {
-  date: Date;
+  date: string;
   active: boolean;
 }
