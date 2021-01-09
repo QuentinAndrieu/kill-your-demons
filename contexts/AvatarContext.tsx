@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { AvatarModel } from '../models/AvatarModel';
+import { AvatarFightModel, AvatarModel } from '../models/AvatarModel';
 
 export const avatar: AvatarModel = {
   id: 'Bcng4MyPHBbUUW5ZQFaf',
@@ -12,5 +12,8 @@ export const avatar: AvatarModel = {
 
 export const AvatarContext = React.createContext({
   avatar,
-  updateFight: (monsterId: string | undefined, active: boolean, date: string | undefined) => {},
+  updateDailyFight: (monsterId: string | undefined, active: boolean, date: string | undefined): void => {},
+  killMonster: (monsterId: string | undefined): void => {},
+  resurrectMonster: (monsterId: string | undefined): void => {},
+  addFight: (fight: AvatarFightModel): void => {},
 });

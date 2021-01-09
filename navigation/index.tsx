@@ -25,8 +25,8 @@ const Stack = createStackNavigator<RootStackParamList>();
 function LogoTitle() {
   return (
     <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
-      <Icon style={{ marginRight: 5 }} name='skull' type='font-awesome-5' color='white' />
-      <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>KillYourDemons</Text>
+      <Icon style={{ marginRight: 5 }} name='skull' type='font-awesome-5' color='black' />
+      <Text style={{ color: 'black', fontSize: 20, fontWeight: 'bold' }}>KillYourDemons</Text>
     </View>
   );
 }
