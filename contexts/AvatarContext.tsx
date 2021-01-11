@@ -12,7 +12,7 @@ export const avatar: AvatarModel = {
 
 export const AvatarContext = React.createContext({
   avatar,
-  updateDailyFight: (monsterId: string | undefined, active: boolean, date: string | undefined): void => {},
+  updateDailyFight: (monsterId: string | undefined, active: boolean, date: string): void => {},
   killMonster: (monsterId: string | undefined): void => {},
   resurrectMonster: (monsterId: string | undefined): void => {},
   addFight: (fight: AvatarFightModel): void => {},

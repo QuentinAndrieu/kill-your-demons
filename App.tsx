@@ -3,7 +3,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from './hooks/useCachedResources';
-import Navigation from './navigation';
+import Main from './navigation/Main';
 import * as firebase from 'firebase';
 import { FirebaseConfig } from './constants/FirebaseConfig';
 
@@ -26,7 +26,7 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <ThemeProvider>
-          <Navigation colorScheme={'light'} />
+          <Main colorScheme={'light'} />
           <StatusBar />
         </ThemeProvider>
       </SafeAreaProvider>

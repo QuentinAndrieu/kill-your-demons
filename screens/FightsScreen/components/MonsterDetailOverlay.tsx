@@ -21,7 +21,7 @@ export class MonsterDetailOverlay extends React.Component<
     fights: AvatarFightModel[];
     displayDetailOverlay: boolean;
     hideOverlayDetail: () => void;
-    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string | undefined) => void;
+    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => void;
   },
   {}
 > {
@@ -31,7 +31,7 @@ export class MonsterDetailOverlay extends React.Component<
     fights: AvatarFightModel[];
     displayDetailOverlay: boolean;
     hideOverlayDetail: () => void;
-    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string | undefined) => void;
+    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => void;
   }) {
     super(props);
 

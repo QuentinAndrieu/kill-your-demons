@@ -29,6 +29,8 @@ export class FightsAddScreen extends React.Component<{ navigation: any }, { sear
                     onChangeText={(value) => this.setState({ searchMonsterName: value })}
                     value={this.state.searchMonsterName}
                     lightTheme={true}
+                    containerStyle={{ backgroundColor: 'white', borderWidth: 0 }}
+                    inputContainerStyle={{ backgroundColor: 'white' }}
                   />
 
                   <NewFightsList

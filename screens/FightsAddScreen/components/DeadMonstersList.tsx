@@ -35,8 +35,8 @@ export class DeadMonstersList extends React.Component<
 
     return deadMonstersFight && deadMonstersFight.length > 0 ? (
       <View>
-        <Text h3 key={'title-ressurect'} style={{ margin: '2%', color: 'red' }}>
-          Ressurect monsters
+        <Text h4 key={'title-resurrect'} style={{ marginTop: '2%', color: 'red', fontWeight: 'bold' }}>
+          Resurrect monsters
         </Text>
         {deadMonstersFight.map((fight, i) => {
           const monster: MonsterModel | undefined = MonsterModel.getMonsterById(fight.monsterId, this.props.monsters);
@@ -44,7 +44,6 @@ export class DeadMonstersList extends React.Component<
             <ListItem
               key={i}
               bottomDivider
-              style={{ margin: '2%' }}
               onPress={() => {
                 this.props.resurrectMonster(fight.monsterId);
                 this.props.navigation.navigate('FightsScreen');

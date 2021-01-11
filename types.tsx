@@ -4,17 +4,16 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  Main: undefined;
-  Monsters: undefined;
-  Overview: undefined;
-  Fights: undefined;
+  Home: undefined;
+  Avatar: undefined;
 };
 
 export type AvatarTabParamList = {
   AvatarScreen: undefined;
 };
 
-export type FightsTabParamList = {
+export type HomeTabParamList = {
+  SettingsScreen: undefined;
   FightsScreen: undefined;
   FightsAddScreen: undefined;
 };

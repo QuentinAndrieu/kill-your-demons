@@ -25,7 +25,7 @@ export class FightIcon extends React.Component<
     monster: MonsterModel | undefined;
     fights: AvatarFightModel[];
     fight: AvatarFightModel;
-    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string | undefined) => void;
+    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => void;
     killMonster: (monsterId: string | undefined) => void;
   },
   { stateFight: FightsScreenStateModel; displayDetailOverlay: boolean }
@@ -34,7 +34,7 @@ export class FightIcon extends React.Component<
     monster: MonsterModel | undefined;
     fights: AvatarFightModel[];
     fight: AvatarFightModel;
-    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string | undefined) => void;
+    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => void;
     killMonster: (monsterId: string | undefined) => void;
   }) {
     super(props);
