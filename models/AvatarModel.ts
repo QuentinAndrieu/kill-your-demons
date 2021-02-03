@@ -3,10 +3,12 @@ import { MonsterModel, MonsterState } from './MonsterModel';
 
 export class AvatarModel {
   id: string;
-  name: string;
+  userId: string;
+  name: string | null;
   pv: number;
   pvTotal: number;
   fights: AvatarFightModel[];
+  createdAt: Date;
 
   static formatDateFight(date: Date) {
     return moment(date).format('YYYY-MM-DD');

@@ -3,17 +3,19 @@ import * as React from 'react';
 import { AvatarFightModel, AvatarModel } from '../models/AvatarModel';
 
 export const avatar: AvatarModel = {
-  id: 'Bcng4MyPHBbUUW5ZQFaf',
+  id: '',
+  userId: '',
   name: '',
   pv: 0,
   pvTotal: 0,
+  createdAt: new Date(),
   fights: [],
 };
 
 export const AvatarContext = React.createContext({
   avatar,
-  updateDailyFight: (monsterId: string | undefined, active: boolean, date: string): void => {},
-  killMonster: (monsterId: string | undefined): void => {},
-  resurrectMonster: (monsterId: string | undefined): void => {},
-  addFight: (fight: AvatarFightModel): void => {},
+  updateDailyFight: (monsterId: string | undefined, active: boolean, date: string): any => {},
+  killMonster: (monsterId: string | undefined): any => {},
+  resurrectMonster: (monsterId: string | undefined): any => {},
+  addFight: (fight: AvatarFightModel): any => {},
 });

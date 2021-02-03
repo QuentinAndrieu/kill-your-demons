@@ -2,7 +2,7 @@ import { AvatarFightModel, AvatarModel } from '../../../models/AvatarModel';
 import { MonsterModel } from '../../../models/MonsterModel';
 import * as React from 'react';
 import { Icon, Text } from 'react-native-elements';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { LocaleConfig } from 'react-native-calendars';
 import { MonsterDetailOverlay } from './MonsterDetailOverlay';
 
@@ -18,6 +18,7 @@ enum FightsScreenStateModel {
   ICON = 'ICON',
   PV = 'PV',
   KILL = 'KILL',
+  LOADING = 'LOADING',
 }
 
 export class FightIcon extends React.Component<
@@ -25,8 +26,8 @@ export class FightIcon extends React.Component<
     monster: MonsterModel | undefined;
     fights: AvatarFightModel[];
     fight: AvatarFightModel;
-    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => void;
-    killMonster: (monsterId: string | undefined) => void;
+    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => Promise<AvatarModel>;
+    killMonster: (monsterId: string | undefined) => Promise<AvatarModel>;
   },
   { stateFight: FightsScreenStateModel; displayDetailOverlay: boolean }
 > {
@@ -34,8 +35,8 @@ export class FightIcon extends React.Component<
     monster: MonsterModel | undefined;
     fights: AvatarFightModel[];
     fight: AvatarFightModel;
-    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => void;
-    killMonster: (monsterId: string | undefined) => void;
+    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => Promise<AvatarModel>;
+    killMonster: (monsterId: string | undefined) => Promise<AvatarModel>;
   }) {
     super(props);
 
@@ -81,17 +82,21 @@ export class FightIcon extends React.Component<
             size={50}
             iconStyle={{ color: 'white' }}
             type='font-awesome-5'
+            raised={true}
             color={
               AvatarModel.hasBeenDone(this.props.fights, this.props.monster?.id, AvatarModel.formatDateFight(new Date())) ? 'black' : 'grey'
             }
             onPress={() => this.setState({ stateFight: this.getNewState(this.state.stateFight) })}
-            onLongPress={() =>
-              this.props.updateDailyFight(
-                this.props.monster?.id,
-                !AvatarModel.hasBeenDone(this.props.fights, this.props.monster?.id, AvatarModel.formatDateFight(new Date())),
-                AvatarModel.formatDateFight(new Date())
-              )
-            }
+            onLongPress={() => {
+              this.setState({ stateFight: FightsScreenStateModel.LOADING });
+              this.props
+                .updateDailyFight(
+                  this.props.monster?.id,
+                  !AvatarModel.hasBeenDone(this.props.fights, this.props.monster?.id, AvatarModel.formatDateFight(new Date())),
+                  AvatarModel.formatDateFight(new Date())
+                )
+                .then(() => this.setState({ stateFight: FightsScreenStateModel.ICON }));
+            }}
           />
         );
       }
@@ -118,6 +123,13 @@ export class FightIcon extends React.Component<
               updateDailyFight={this.props.updateDailyFight}
               fights={this.props.fights}
             ></MonsterDetailOverlay>
+          </View>
+        );
+      }
+      case FightsScreenStateModel.LOADING: {
+        return (
+          <View style={{ justifyContent: 'center', flexDirection: 'row', height: 118 }}>
+            <ActivityIndicator size='large' color='black' />
           </View>
         );
       }

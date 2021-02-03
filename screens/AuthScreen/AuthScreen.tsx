@@ -7,13 +7,14 @@ import { AuthFirestore } from '../../firestore/AuthFirestore';
 const styleScreen: any = StyleScreen;
 const styles = StyleSheet.create(styleScreen);
 
-export class AuthScreen extends React.Component<{}, { email: string; password: string }> {
+export class AuthScreen extends React.Component<{}, { email: string; password: string; toggleSignIn: boolean }> {
   constructor(props: {}) {
     super(props);
 
     this.state = {
       email: '',
       password: '',
+      toggleSignIn: false,
     };
   }
 
@@ -40,7 +41,25 @@ export class AuthScreen extends React.Component<{}, { email: string; password: s
             leftIcon={{ type: 'font-awesome', name: 'lock' }}
             onChangeText={(password) => this.setState({ password })}
           />
-          <Button title='SignUp' onPress={() => AuthFirestore.signUp(this.state.email, this.state.password)} />
+          <Button
+            title={this.state.toggleSignIn ? 'Sign In' : 'Sign Up'}
+            disabled={Boolean(!this.state.email || !this.state.password)}
+            onPress={() => {
+              if (this.state.toggleSignIn) {
+                AuthFirestore.signIn(this.state.email, this.state.password);
+              } else {
+                AuthFirestore.signUp(this.state.email, this.state.password);
+              }
+            }}
+          />
+
+          <Button
+            title={this.state.toggleSignIn ? 'No Account ? Sign Up' : 'Already an account ? Sign In'}
+            buttonStyle={{ backgroundColor: 'lightgrey', marginTop: '5%' }}
+            onPress={() => {
+              this.setState({ toggleSignIn: !this.state.toggleSignIn });
+            }}
+          />
         </View>
       </View>
     );

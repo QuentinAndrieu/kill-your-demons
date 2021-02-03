@@ -5,4 +5,5 @@ export const user: User | null = null;
 
 export const UserContext = React.createContext({
   user,
+  isLoading: true,
 });

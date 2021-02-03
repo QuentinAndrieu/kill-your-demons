@@ -34,14 +34,13 @@ export class NewFightsList extends React.Component<
 
     return newMonsters && newMonsters.length > 0 ? (
       <View>
-        <Text h3 key={'title-new'} style={{ color: 'black', margin: '2%' }}>
+        <Text h4 key={'title-resurrect'} style={{ marginTop: '2%', color: 'black', fontWeight: 'bold' }}>
           New fights
         </Text>
         {newMonsters.map((monster, i) => (
           <ListItem
             key={i}
             bottomDivider
-            style={{ margin: '2%' }}
             onPress={() => {
               const fight: AvatarFightModel = new AvatarFightModel();
               fight.daysFightings = [];

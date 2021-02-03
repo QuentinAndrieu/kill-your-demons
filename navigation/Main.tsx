@@ -1,9 +1,8 @@
-import firebase, { User } from 'firebase/app';
 import 'firebase/auth';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName, Text, View } from 'react-native';
+import { ActivityIndicator, ColorSchemeName, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Colors from '../constants/Colors';
 import { AuthScreen } from '../screens/AuthScreen/AuthScreen';
@@ -13,22 +12,11 @@ import LinkingConfiguration from './utils/LinkingConfiguration';
 import { navigationRef } from './utils/RootNavigation';
 import * as RootNavigation from './utils/RootNavigation';
 import { MainContainer } from './MainContainer';
+import { UserContext } from '../contexts/UserContext';
 
-export default class Main extends React.Component<{ colorScheme: ColorSchemeName }, { user: User | null }> {
+export default class Main extends React.Component<{ colorScheme: ColorSchemeName }, {}> {
   constructor(props: { colorScheme: ColorSchemeName }) {
     super(props);
-
-    this.state = {
-      user: null,
-    };
-  }
-
-  componentDidMount() {
-    const onAuthStateChanged = firebase.auth().onAuthStateChanged((user: User | null) => {
-      this.setState({ user });
-
-      return onAuthStateChanged;
-    });
   }
 
   render() {
@@ -46,14 +34,30 @@ export default class Main extends React.Component<{ colorScheme: ColorSchemeName
         }
       : DefaultTheme;
 
-    return this.state.user ? (
+    return (
       <MainContainer>
-        <NavigationContainer linking={LinkingConfiguration} theme={customDefaultTheme} ref={navigationRef}>
-          <RootNavigator />
-        </NavigationContainer>
+        <UserContext.Consumer>
+          {(userContext) => {
+            if (userContext.isLoading) {
+              return (
+                <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
+                  <ActivityIndicator size='large' />
+                </View>
+              );
+            }
+
+            if (userContext.user) {
+              return (
+                <NavigationContainer linking={LinkingConfiguration} theme={customDefaultTheme} ref={navigationRef}>
+                  <RootNavigator />
+                </NavigationContainer>
+              );
+            }
+
+            return <AuthScreen />;
+          }}
+        </UserContext.Consumer>
       </MainContainer>
-    ) : (
-      <AuthScreen />
     );
   }
 }
@@ -88,10 +92,7 @@ class RootNavigator extends React.Component {
         <Stack.Screen
           name='KillYourDemons'
           options={{
-            headerTitle: (props) => {
-              console.log('props', props);
-              return <LogoTitle />;
-            },
+            headerTitle: (props) => <LogoTitle />,
           }}
           component={BottomTabNavigator}
         />

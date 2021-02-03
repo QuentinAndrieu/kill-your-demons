@@ -9,4 +9,8 @@ export class AuthFirestore {
   static signOut() {
     return firebase.auth().signOut();
   }
+
+  static signIn(email: string, password: string) {
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  }
 }
