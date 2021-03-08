@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
-import StyleScreen from '../../constants/StyleScreen';
-import { AvatarContext } from '../../contexts/AvatarContext';
-import { MonstersContext } from '../../contexts/MonstersContext';
+import StyleScreen from '../shared/constants/StyleScreen';
+import { AvatarContext } from '../shared/contexts/AvatarContext';
+import { MonstersContext } from '../shared/contexts/MonstersContext';
 
 const styleScreen: any = StyleScreen;
 const styles = StyleSheet.create(styleScreen);
@@ -25,7 +25,7 @@ export function AvatarScreen() {
               >
                 <View style={{ width: '55%', height: '100%', paddingLeft: '5%' }}>
                   <Image
-                    source={require('./../../images/avatar.jpg')}
+                    source={require('../shared/images/avatar.jpg')}
                     style={{ width: '100%', height: '100%' }}
                     resizeMode='stretch'
                     PlaceholderContent={<ActivityIndicator />}

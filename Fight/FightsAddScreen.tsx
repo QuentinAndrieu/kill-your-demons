@@ -2,8 +2,8 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-import { AvatarContext } from '../../contexts/AvatarContext';
-import { MonstersContext } from '../../contexts/MonstersContext';
+import { AvatarContext } from '../shared/contexts/AvatarContext';
+import { MonstersContext } from '../shared/contexts/MonstersContext';
 import { DeadMonstersList } from './components/DeadMonstersList';
 import { NewFightsList } from './components/NewFightsList';
 

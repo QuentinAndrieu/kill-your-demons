@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Icon, ListItem, Text } from 'react-native-elements';
-import { AvatarFightModel } from '../../../models/AvatarModel';
-import { MonsterModel } from '../../../models/MonsterModel';
+import { AvatarFightModel } from '../../shared/models/AvatarModel';
+import { MonsterModel } from '../../shared/models/MonsterModel';
 
 export function NewFightsList(props: {
   searchMonsterName: string;

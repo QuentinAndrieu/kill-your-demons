@@ -1,5 +1,5 @@
-import { AvatarFightModel, AvatarModel } from '../../../models/AvatarModel';
-import { MonsterModel, MonsterState } from '../../../models/MonsterModel';
+import { AvatarFightModel, AvatarModel } from '../../shared/models/AvatarModel';
+import { MonsterModel, MonsterState } from '../../shared/models/MonsterModel';
 import * as React from 'react';
 import { Icon, Image, Overlay, Text } from 'react-native-elements';
 import { ActivityIndicator, View } from 'react-native';
@@ -33,16 +33,16 @@ export function MonsterDetailOverlay(props: {
 
     switch (stateMonsterFight?.maxPV) {
       case 100: {
-        return require(`./../../../images/diable-cigarette.jpg`);
+        return require(`./../../shared/images/diable-cigarette.jpg`);
       }
       case 69: {
-        return require(`./../../../images/sad-cigarette.jpg`);
+        return require(`./../../shared/images/sad-cigarette.jpg`);
       }
       case 29: {
-        return require(`./../../../images/dead-cigarette.jpg`);
+        return require(`./../../shared/images/dead-cigarette.jpg`);
       }
       default: {
-        return require(`./../../../images/diable-cigarette.jpg`);
+        return require(`./../../shared/images/diable-cigarette.jpg`);
       }
     }
   };

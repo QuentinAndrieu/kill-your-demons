@@ -1,13 +1,20 @@
 import * as React from 'react';
 import firebase, { User } from 'firebase/app';
 import 'firebase/auth';
-import { AvatarFightModel, AvatarModel } from '../models/AvatarModel';
-import { MonsterModel } from '../models/MonsterModel';
-import { AvatarContext } from '../contexts/AvatarContext';
-import { UserContext } from '../contexts/UserContext';
-import { MonstersContext } from '../contexts/MonstersContext';
-import { loadMonstersFromCloud } from '../firestore/MonsterFirestore';
-import { loadAvatarFromCloud, updateDailyFromCloud, createAvatarFromCloud, addFightFromCloud, killMonsterFromCloud, resurrectMonsterFromCloud } from '../firestore/AvatarFirestore';
+import { AvatarFightModel, AvatarModel } from '../shared/models/AvatarModel';
+import { MonsterModel } from '../shared/models/MonsterModel';
+import { AvatarContext } from '../shared/contexts/AvatarContext';
+import { UserContext } from '../shared/contexts/UserContext';
+import { MonstersContext } from '../shared/contexts/MonstersContext';
+import { loadMonstersFromCloud } from '../shared/firestore/MonsterFirestore';
+import {
+  loadAvatarFromCloud,
+  updateDailyFromCloud,
+  createAvatarFromCloud,
+  addFightFromCloud,
+  killMonsterFromCloud,
+  resurrectMonsterFromCloud,
+} from '../shared/firestore/AvatarFirestore';
 
 export function MainContainer(props: { children: any }) {
   const [avatar, setAvatar] = React.useState<AvatarModel>(new AvatarModel());

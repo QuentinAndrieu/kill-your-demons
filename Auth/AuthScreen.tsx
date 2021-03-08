@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from 'react-native-elements';
-import StyleScreen from '../../constants/StyleScreen';
-import { signIn, signUp } from '../../firestore/AuthFirestore';
+import { signIn, signUp } from '../shared/firestore/AuthFirestore';
+import StyleScreen from '../shared/constants/StyleScreen';
 
 const styleScreen: any = StyleScreen;
 const styles = StyleSheet.create(styleScreen);

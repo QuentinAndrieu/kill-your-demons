@@ -1,14 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import Colors from '../../constants/Colors';
-import { AvatarScreen } from '../../screens/AvatarScreen/AvatarScreen';
-import { BottomTabParamList, AvatarTabParamList, HomeTabParamList } from '../../types';
-import { FightsScreen } from '../../screens/FightsScreen/FightsScreen';
-import { FightsAddScreen } from '../../screens/FightsAddScreen/FightsAddScreen';
-import { Icon } from 'react-native-elements';
+import Colors from '../../shared/constants/Colors';
 
-import { SettingsScreen } from '../../screens/SettingScreen/SettingsScreen';
+import { BottomTabParamList, AvatarTabParamList, HomeTabParamList } from '../../types';
+import { Icon } from 'react-native-elements';
+import { AvatarScreen } from '../../Avatar/AvatarScreen';
+import { SettingsScreen } from '../../Settings/SettingsScreen';
+import { FightsScreen } from '../../Fight/FightsScreen';
+import { FightsAddScreen } from '../../Fight/FightsAddScreen';
 
 const AvatarNavigator = (props: any) => {
   const AvatarStack = createStackNavigator<AvatarTabParamList>();

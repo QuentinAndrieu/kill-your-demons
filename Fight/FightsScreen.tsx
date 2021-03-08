@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import StyleScreen from '../../constants/StyleScreen';
+import StyleScreen from '../shared/constants/StyleScreen';
 import { Text, Icon } from 'react-native-elements';
-import { MonsterModel } from '../../models/MonsterModel';
-import { MonstersContext } from '../../contexts/MonstersContext';
-import { AvatarContext } from '../../contexts/AvatarContext';
+import { MonsterModel } from '../shared/models/MonsterModel';
+import { MonstersContext } from '../shared/contexts/MonstersContext';
+import { AvatarContext } from '../shared/contexts/AvatarContext';
 import { FightIcon } from './components/FightIcon';
-import { AvatarFightModel } from '../../models/AvatarModel';
+import { AvatarFightModel } from '../shared/models/AvatarModel';
 
 const styleScreen: any = StyleScreen;
 const styles = StyleSheet.create(styleScreen);

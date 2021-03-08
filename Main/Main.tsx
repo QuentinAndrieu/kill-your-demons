@@ -4,15 +4,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ActivityIndicator, ColorSchemeName, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import Colors from '../constants/Colors';
-import { AuthScreen } from '../screens/AuthScreen/AuthScreen';
+import Colors from '../shared/constants/Colors';
 import { RootStackParamList } from '../types';
-import { BottomTabNavigator } from './components/BottomTabNavigator';
-import LinkingConfiguration from './utils/LinkingConfiguration';
-import { navigationRef } from './utils/RootNavigation';
-import * as RootNavigation from './utils/RootNavigation';
+
+import * as RootNavigation from '../shared/utils/RootNavigation';
 import { MainContainer } from './MainContainer';
-import { UserContext } from '../contexts/UserContext';
+import { UserContext } from '../shared/contexts/UserContext';
+import { BottomTabNavigator } from './components/BottomTabNavigator';
+import LinkingConfiguration from '../shared/utils/LinkingConfiguration';
+import { AuthScreen } from '../Auth/AuthScreen';
 
 const LogoTitle = () => {
   return (
@@ -72,7 +72,7 @@ export default function Main(props: { colorScheme: ColorSchemeName }) {
 
           if (userContext.user) {
             return (
-              <NavigationContainer linking={LinkingConfiguration} theme={customDefaultTheme} ref={navigationRef}>
+              <NavigationContainer linking={LinkingConfiguration} theme={customDefaultTheme} ref={RootNavigation.navigationRef}>
                 <RootNavigator />
               </NavigationContainer>
             );

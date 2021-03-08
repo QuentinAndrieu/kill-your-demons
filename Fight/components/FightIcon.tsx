@@ -1,5 +1,5 @@
-import { AvatarFightModel, AvatarModel } from '../../../models/AvatarModel';
-import { MonsterModel } from '../../../models/MonsterModel';
+import { AvatarFightModel, AvatarModel } from '../../shared/models/AvatarModel';
+import { MonsterModel } from '../../shared/models/MonsterModel';
 import * as React from 'react';
 import { Icon, Text } from 'react-native-elements';
 import { ActivityIndicator, View } from 'react-native';
