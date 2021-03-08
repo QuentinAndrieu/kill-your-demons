@@ -21,35 +21,17 @@ enum FightsScreenStateModel {
   LOADING = 'LOADING',
 }
 
-export class FightIcon extends React.Component<
-  {
-    monster: MonsterModel | undefined;
-    fights: AvatarFightModel[];
-    fight: AvatarFightModel;
-    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => Promise<AvatarModel>;
-    killMonster: (monsterId: string | undefined) => Promise<AvatarModel>;
-  },
-  { stateFight: FightsScreenStateModel; displayDetailOverlay: boolean }
-> {
-  constructor(props: {
-    monster: MonsterModel | undefined;
-    fights: AvatarFightModel[];
-    fight: AvatarFightModel;
-    updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => Promise<AvatarModel>;
-    killMonster: (monsterId: string | undefined) => Promise<AvatarModel>;
-  }) {
-    super(props);
+export function FightIcon(props: {
+  monster: MonsterModel | undefined;
+  fights: AvatarFightModel[];
+  fight: AvatarFightModel;
+  updateDailyFight: (monsterId: string | undefined, active: boolean, date: string) => Promise<AvatarModel>;
+  killMonster: (monsterId: string | undefined) => Promise<AvatarModel>;
+}) {
+  const [stateFight, setStateFight] = React.useState<FightsScreenStateModel>(FightsScreenStateModel.ICON);
+  const [displayDetailOverlay, setDisplayDetailOverlay] = React.useState<boolean>(false);
 
-    this.state = {
-      stateFight: FightsScreenStateModel.ICON,
-      displayDetailOverlay: false,
-    };
-
-    this.displayOverlayDetail = this.displayOverlayDetail.bind(this);
-    this.hideOverlayDetail = this.hideOverlayDetail.bind(this);
-  }
-
-  private getNewState(currentState: FightsScreenStateModel): FightsScreenStateModel {
+  const getNewState = (currentState: FightsScreenStateModel): FightsScreenStateModel => {
     switch (currentState) {
       case FightsScreenStateModel.ICON: {
         return FightsScreenStateModel.PV;
@@ -61,93 +43,89 @@ export class FightIcon extends React.Component<
         return FightsScreenStateModel.ICON;
       }
     }
-  }
+  };
 
-  private displayOverlayDetail() {
-    this.setState({ displayDetailOverlay: true });
-  }
+  const displayOverlayDetail = () => {
+    setDisplayDetailOverlay(true);
+  };
 
-  private hideOverlayDetail() {
-    this.setState({ displayDetailOverlay: false });
-  }
+  const hideOverlayDetail = () => {
+    setDisplayDetailOverlay(false);
+  };
 
-  render() {
-    switch (this.state.stateFight) {
-      case FightsScreenStateModel.ICON: {
-        return (
+  switch (stateFight) {
+    case FightsScreenStateModel.ICON: {
+      return (
+        <Icon
+          key={`${props.monster?.id}icon`}
+          reverse
+          name={props.monster?.icon}
+          size={50}
+          iconStyle={{ color: 'white' }}
+          type='font-awesome-5'
+          raised={true}
+          color={AvatarModel.hasBeenDone(props.fights, props.monster?.id, AvatarModel.formatDateFight(new Date())) ? 'black' : 'grey'}
+          onPress={() => setStateFight(getNewState(stateFight))}
+          onLongPress={() => {
+            setStateFight(FightsScreenStateModel.LOADING);
+            props
+              .updateDailyFight(
+                props.monster?.id,
+                !AvatarModel.hasBeenDone(props.fights, props.monster?.id, AvatarModel.formatDateFight(new Date())),
+                AvatarModel.formatDateFight(new Date())
+              )
+              .then(() => setStateFight(FightsScreenStateModel.ICON));
+          }}
+        />
+      );
+    }
+    case FightsScreenStateModel.PV: {
+      return (
+        <View>
           <Icon
-            key={`${this.props.monster?.id}icon`}
+            key={`${props.monster?.id}detail`}
             reverse
-            name={this.props.monster?.icon}
+            name={'file-alt'}
             size={50}
             iconStyle={{ color: 'white' }}
             type='font-awesome-5'
-            raised={true}
-            color={
-              AvatarModel.hasBeenDone(this.props.fights, this.props.monster?.id, AvatarModel.formatDateFight(new Date())) ? 'black' : 'grey'
-            }
-            onPress={() => this.setState({ stateFight: this.getNewState(this.state.stateFight) })}
-            onLongPress={() => {
-              this.setState({ stateFight: FightsScreenStateModel.LOADING });
-              this.props
-                .updateDailyFight(
-                  this.props.monster?.id,
-                  !AvatarModel.hasBeenDone(this.props.fights, this.props.monster?.id, AvatarModel.formatDateFight(new Date())),
-                  AvatarModel.formatDateFight(new Date())
-                )
-                .then(() => this.setState({ stateFight: FightsScreenStateModel.ICON }));
-            }}
+            color={'grey'}
+            onPress={() => setStateFight(getNewState(stateFight))}
+            onLongPress={() => displayOverlayDetail()}
           />
-        );
-      }
-      case FightsScreenStateModel.PV: {
-        return (
-          <View>
-            <Icon
-              key={`${this.props.monster?.id}detail`}
-              reverse
-              name={'file-alt'}
-              size={50}
-              iconStyle={{ color: 'white' }}
-              type='font-awesome-5'
-              color={'grey'}
-              onPress={() => this.setState({ stateFight: this.getNewState(this.state.stateFight) })}
-              onLongPress={() => this.displayOverlayDetail()}
-            />
 
-            <MonsterDetailOverlay
-              monster={this.props.monster}
-              fight={this.props.fight}
-              displayDetailOverlay={this.state.displayDetailOverlay}
-              hideOverlayDetail={this.hideOverlayDetail}
-              updateDailyFight={this.props.updateDailyFight}
-              fights={this.props.fights}
-            ></MonsterDetailOverlay>
-          </View>
-        );
-      }
-      case FightsScreenStateModel.LOADING: {
-        return (
-          <View style={{ justifyContent: 'center', flexDirection: 'row', height: 118 }}>
-            <ActivityIndicator size='large' color='black' />
-          </View>
-        );
-      }
-      case FightsScreenStateModel.KILL: {
-        return (
-          <Icon
-            key={`${this.props.monster?.id}kill`}
-            reverse
-            name={'skull'}
-            size={50}
-            iconStyle={{ color: 'white' }}
-            type='font-awesome-5'
-            color={'red'}
-            onPress={() => this.setState({ stateFight: this.getNewState(this.state.stateFight) })}
-            onLongPress={() => this.props.killMonster(this.props.monster?.id)}
-          />
-        );
-      }
+          <MonsterDetailOverlay
+            monster={props.monster}
+            fight={props.fight}
+            displayDetailOverlay={displayDetailOverlay}
+            hideOverlayDetail={hideOverlayDetail}
+            updateDailyFight={props.updateDailyFight}
+            fights={props.fights}
+          ></MonsterDetailOverlay>
+        </View>
+      );
+    }
+    case FightsScreenStateModel.LOADING: {
+      return (
+        <View style={{ justifyContent: 'center', flexDirection: 'row', height: 118 }}>
+          <ActivityIndicator size='large' color='black' />
+        </View>
+      );
+    }
+    case FightsScreenStateModel.KILL: {
+      return (
+        <Icon
+          key={`${props.monster?.id}kill`}
+          reverse
+          name={'skull'}
+          size={50}
+          iconStyle={{ color: 'white' }}
+          type='font-awesome-5'
+          color={'red'}
+          onPress={() => setStateFight(getNewState(stateFight))}
+          onLongPress={() => props.killMonster(props.monster?.id)}
+        />
+      );
     }
   }
 }

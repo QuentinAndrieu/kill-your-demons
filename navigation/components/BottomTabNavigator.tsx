@@ -10,69 +10,59 @@ import { Icon } from 'react-native-elements';
 
 import { SettingsScreen } from '../../screens/SettingScreen/SettingsScreen';
 
-export class BottomTabNavigator extends React.Component<{}> {
-  constructor(props: {}) {
-    super(props);
-  }
+const AvatarNavigator = (props: any) => {
+  const AvatarStack = createStackNavigator<AvatarTabParamList>();
 
-  render() {
-    const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+  return (
+    <AvatarStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <AvatarStack.Screen name='AvatarScreen'>{(props) => <AvatarScreen />}</AvatarStack.Screen>
+    </AvatarStack.Navigator>
+  );
+};
 
-    return (
-      <BottomTab.Navigator initialRouteName='Home' tabBarOptions={{ activeTintColor: Colors['light'].tint, showLabel: false }}>
-        <BottomTab.Screen
-          name='Home'
-          options={{
-            tabBarIcon: ({ color }) => <Icon name='home' type='font-awesome-5' color={color} />,
-          }}
-        >
-          {(props) => <HomeNavigator {...props} />}
-        </BottomTab.Screen>
+const HomeNavigator = (props: any) => {
+  const HomeStack = createStackNavigator<HomeTabParamList>();
 
-        <BottomTab.Screen
-          name='Avatar'
-          options={{
-            tabBarIcon: ({ color }) => <Icon name='user-alt' type='font-awesome-5' color={color} />,
-          }}
-        >
-          {(props) => <AvatarNavigator {...props} />}
-        </BottomTab.Screen>
-      </BottomTab.Navigator>
-    );
-  }
-}
+  return (
+    <HomeStack.Navigator
+      initialRouteName='FightsScreen'
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <HomeStack.Screen name='FightsScreen'>{(props) => <FightsScreen {...props} />}</HomeStack.Screen>
+      <HomeStack.Screen name='FightsAddScreen'>{(props) => <FightsAddScreen {...props} />}</HomeStack.Screen>
+      <HomeStack.Screen name='SettingsScreen'>{() => <SettingsScreen />}</HomeStack.Screen>
+    </HomeStack.Navigator>
+  );
+};
 
-class AvatarNavigator extends React.Component {
-  render() {
-    const AvatarStack = createStackNavigator<AvatarTabParamList>();
+export function BottomTabNavigator() {
+  const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-    return (
-      <AvatarStack.Navigator
-        screenOptions={{
-          headerShown: false,
+  return (
+    <BottomTab.Navigator initialRouteName='Home' tabBarOptions={{ activeTintColor: Colors['light'].tint, showLabel: false }}>
+      <BottomTab.Screen
+        name='Home'
+        options={{
+          tabBarIcon: ({ color }) => <Icon name='home' type='font-awesome-5' color={color} />,
         }}
       >
-        <AvatarStack.Screen name='AvatarScreen'>{(props) => <AvatarScreen {...props} />}</AvatarStack.Screen>
-      </AvatarStack.Navigator>
-    );
-  }
-}
+        {(props) => <HomeNavigator {...props} />}
+      </BottomTab.Screen>
 
-class HomeNavigator extends React.Component {
-  render() {
-    const HomeStack = createStackNavigator<HomeTabParamList>();
-
-    return (
-      <HomeStack.Navigator
-        initialRouteName='FightsScreen'
-        screenOptions={{
-          headerShown: false,
+      <BottomTab.Screen
+        name='Avatar'
+        options={{
+          tabBarIcon: ({ color }) => <Icon name='user-alt' type='font-awesome-5' color={color} />,
         }}
       >
-        <HomeStack.Screen name='FightsScreen'>{(props) => <FightsScreen {...props} />}</HomeStack.Screen>
-        <HomeStack.Screen name='FightsAddScreen'>{(props) => <FightsAddScreen {...props} />}</HomeStack.Screen>
-        <HomeStack.Screen name='SettingsScreen'>{(props) => <SettingsScreen {...props} />}</HomeStack.Screen>
-      </HomeStack.Navigator>
-    );
-  }
+        {(props) => <AvatarNavigator {...props} />}
+      </BottomTab.Screen>
+    </BottomTab.Navigator>
+  );
 }

@@ -7,53 +7,45 @@ import { MonstersContext } from '../../contexts/MonstersContext';
 import { DeadMonstersList } from './components/DeadMonstersList';
 import { NewFightsList } from './components/NewFightsList';
 
-export class FightsAddScreen extends React.Component<{ navigation: any }, { searchMonsterName: string }> {
-  constructor(props: { navigation: any }) {
-    super(props);
+export function FightsAddScreen(props: { navigation: any }) {
+  const [searchMonsterName, setSearchMonsterName] = React.useState<string>('');
 
-    this.state = {
-      searchMonsterName: '',
-    };
-  }
+  return (
+    <AvatarContext.Consumer>
+      {(avatarContext) => (
+        <MonstersContext.Consumer>
+          {(monstersContext) => (
+            <ScrollView>
+              <View>
+                <SearchBar
+                  placeholder='Search for monsters'
+                  onChangeText={(value) => setSearchMonsterName(value)}
+                  value={searchMonsterName}
+                  lightTheme={true}
+                  containerStyle={{ backgroundColor: 'white', borderWidth: 0 }}
+                  inputContainerStyle={{ backgroundColor: 'white' }}
+                />
 
-  render() {
-    return (
-      <AvatarContext.Consumer>
-        {(avatarContext) => (
-          <MonstersContext.Consumer>
-            {(monstersContext) => (
-              <ScrollView>
-                <View>
-                  <SearchBar
-                    placeholder='Search for monsters'
-                    onChangeText={(value) => this.setState({ searchMonsterName: value })}
-                    value={this.state.searchMonsterName}
-                    lightTheme={true}
-                    containerStyle={{ backgroundColor: 'white', borderWidth: 0 }}
-                    inputContainerStyle={{ backgroundColor: 'white' }}
-                  />
+                <NewFightsList
+                  addFight={avatarContext.addFight}
+                  fights={avatarContext.avatar.fights}
+                  navigation={props.navigation}
+                  monsters={monstersContext.monsters}
+                  searchMonsterName={searchMonsterName}
+                />
 
-                  <NewFightsList
-                    addFight={avatarContext.addFight}
-                    fights={avatarContext.avatar.fights}
-                    navigation={this.props.navigation}
-                    monsters={monstersContext.monsters}
-                    searchMonsterName={this.state.searchMonsterName}
-                  />
-
-                  <DeadMonstersList
-                    resurrectMonster={avatarContext.resurrectMonster}
-                    fights={avatarContext.avatar.fights}
-                    navigation={this.props.navigation}
-                    monsters={monstersContext.monsters}
-                    searchMonsterName={this.state.searchMonsterName}
-                  />
-                </View>
-              </ScrollView>
-            )}
-          </MonstersContext.Consumer>
-        )}
-      </AvatarContext.Consumer>
-    );
-  }
+                <DeadMonstersList
+                  resurrectMonster={avatarContext.resurrectMonster}
+                  fights={avatarContext.avatar.fights}
+                  navigation={props.navigation}
+                  monsters={monstersContext.monsters}
+                  searchMonsterName={searchMonsterName}
+                />
+              </View>
+            </ScrollView>
+          )}
+        </MonstersContext.Consumer>
+      )}
+    </AvatarContext.Consumer>
+  );
 }
